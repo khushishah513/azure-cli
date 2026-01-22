@@ -1408,7 +1408,7 @@ class AuthClient:
     def create_or_update(cls, cmd, resource_group_name, container_app_name, auth_config_name, auth_config_envelope):
         management_hostname = cmd.cli_ctx.cloud.endpoints.resource_manager
         sub_id = get_subscription_id(cmd.cli_ctx)
-        request_url = f"{management_hostname}subscriptions/{sub_id}/resourceGroups/{resource_group_name}/providers/Microsoft.App/containerApps/{container_app_name}/authConfigs/{auth_config_name}?api-version={cls.api_version}"
+        request_url = f"{management_hostname.strip('/')}/subscriptions/{sub_id}/resourceGroups/{resource_group_name}/providers/Microsoft.App/containerApps/{container_app_name}/authConfigs/{auth_config_name}?api-version={cls.api_version}"
 
         if "properties" not in auth_config_envelope:  # sdk does this for us
             temp_env = auth_config_envelope
@@ -1423,7 +1423,7 @@ class AuthClient:
     def delete(cls, cmd, resource_group_name, container_app_name, auth_config_name):
         management_hostname = cmd.cli_ctx.cloud.endpoints.resource_manager
         sub_id = get_subscription_id(cmd.cli_ctx)
-        request_url = f"{management_hostname}subscriptions/{sub_id}/resourceGroups/{resource_group_name}/providers/Microsoft.App/containerApps/{container_app_name}/authConfigs/{auth_config_name}?api-version={cls.api_version}"
+        request_url = f"{management_hostname.strip('/')}/subscriptions/{sub_id}/resourceGroups/{resource_group_name}/providers/Microsoft.App/containerApps/{container_app_name}/authConfigs/{auth_config_name}?api-version={cls.api_version}"
 
         send_raw_request(cmd.cli_ctx, "DELETE", request_url)
         return
@@ -1432,7 +1432,7 @@ class AuthClient:
     def get(cls, cmd, resource_group_name, container_app_name, auth_config_name):
         management_hostname = cmd.cli_ctx.cloud.endpoints.resource_manager
         sub_id = get_subscription_id(cmd.cli_ctx)
-        request_url = f"{management_hostname}subscriptions/{sub_id}/resourceGroups/{resource_group_name}/providers/Microsoft.App/containerApps/{container_app_name}/authConfigs/{auth_config_name}?api-version={cls.api_version}"
+        request_url = f"{management_hostname.strip('/')}/subscriptions/{sub_id}/resourceGroups/{resource_group_name}/providers/Microsoft.App/containerApps/{container_app_name}/authConfigs/{auth_config_name}?api-version={cls.api_version}"
 
         r = send_raw_request(cmd.cli_ctx, "GET", request_url)
         return r.json()
@@ -1445,7 +1445,7 @@ class SubscriptionClient:
     def show_custom_domain_verification_id(cls, cmd):
         management_hostname = cmd.cli_ctx.cloud.endpoints.resource_manager
         sub_id = get_subscription_id(cmd.cli_ctx)
-        request_url = f"{management_hostname}subscriptions/{sub_id}/providers/Microsoft.App/getCustomDomainVerificationId?api-version={cls.api_version}"
+        request_url = f"{management_hostname.strip('/')}/subscriptions/{sub_id}/providers/Microsoft.App/getCustomDomainVerificationId?api-version={cls.api_version}"
 
         r = send_raw_request(cmd.cli_ctx, "POST", request_url)
         return r.json()
@@ -1454,7 +1454,7 @@ class SubscriptionClient:
     def list_usages(cls, cmd, location):
         management_hostname = cmd.cli_ctx.cloud.endpoints.resource_manager
         sub_id = get_subscription_id(cmd.cli_ctx)
-        request_url = f"{management_hostname}subscriptions/{sub_id}/providers/Microsoft.App/locations/{location}/usages?api-version={cls.api_version}"
+        request_url = f"{management_hostname.strip('/')}/subscriptions/{sub_id}/providers/Microsoft.App/locations/{location}/usages?api-version={cls.api_version}"
 
         r = send_raw_request(cmd.cli_ctx, "GET", request_url)
         return r.json()
